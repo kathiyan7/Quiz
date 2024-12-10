@@ -5,18 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christmas Quiz</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="Christmas.css">
 </head>
 <body>
+    <canvas id="snowCanvas"></canvas>
+   <img src="santa_sleigh.png" alt="Santa Sleigh" class="santa">
+   <img src="christmas_tree.png" alt="Christmas Tree" class="christmas-tree">
+   <img src="christmas_bell.png" alt="Christmas Bell" class="Christmas-bell">
+   <img src="rightbottom.png" alt="Right Bottom" class="right-bottom">
+   <img src="righttop.png" alt="Right Top" class="right-top">
     <div class="container">
         <h1>Christmas Quiz</h1>
-        <form id="quizForm">
-            <div id="userDetails">
-                <input type="text" id="name" placeholder="Name" required>
-                <input type="text" id="roll" placeholder="Roll Number" required>
-                <input type="text" id="dept" placeholder="Department" required>
-                <input type="tel" id="phone" placeholder="Phone Number" required>
+        <form id="userDetailsForm">
+            <div class="step">
+                <h2>User Details</h2>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="roll">Roll Number:</label>
+                    <input type="text" id="roll" placeholder="Enter your roll number" required>
+                </div>
+                <div class="form-group">
+                    <label for="dept">Department:</label>
+                    <input type="text" id="dept" placeholder="Enter your department" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                </div>
+                <button type="submit" class="next-button">Submit</button>
             </div>
-            <div id="quizQuestions">
+        </form>
+
+        <form id="quizForm" style="display: none;">
+            <div class="step">
+                <h2>Quiz Questions</h2>
                 <div class="question">
                     <p id="easyQuestion"></p>
                     <div class="options" id="easyOptions"></div>
@@ -29,10 +54,11 @@
                     <p id="hardQuestion"></p>
                     <div class="options" id="hardOptions"></div>
                 </div>
+                <button type="submit">Submit Quiz</button>
             </div>
-            <button type="submit">Submit</button>
         </form>
     </div>
     <script src="script.js"></script>
+    <script src="SnowEffect.js"></script>
 </body>
 </html>

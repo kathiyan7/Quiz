@@ -1,4 +1,12 @@
-// Sample Questions (replace with your actual 180 questions)
+// Retrieve stored responses
+const responses = JSON.parse(localStorage.getItem("quizResponses")) || [];
+
+// Function to check if the user has already attempted the quiz
+function hasAlreadyAttempted(roll) {
+    return responses.some((response) => response.roll === roll);
+}
+
+// Sample Questions
 const questions = {
     easy: [
         { question: "What is 2+2?", options: ["3", "4", "5", "6"], answer: "4" },
@@ -14,11 +22,10 @@ const questions = {
     ]
 };
 
-const responses = JSON.parse(localStorage.getItem("quizResponses")) || []; // Retrieve stored responses
-
-// Check if the user has already attempted the quiz
-function hasAlreadyAttempted(roll) {
-    return responses.some((response) => response.roll === roll);
+// Switch between forms (Step 1: User details, Step 2: Quiz)
+function switchToQuiz() {
+    document.getElementById("userDetailsForm").style.display = "none";
+    document.getElementById("quizForm").style.display = "block";
 }
 
 // Randomize Questions
@@ -65,8 +72,8 @@ function createOptions(elementId, options) {
 
 let currentQuestions = loadQuestions();
 
-// Submit Quiz Form
-document.getElementById("quizForm").addEventListener("submit", (e) => {
+// Step 1: Submit User Details
+document.getElementById("userDetailsForm").addEventListener("submit", (e) => {
     e.preventDefault();
 
     const name = document.getElementById("name").value;
@@ -74,12 +81,21 @@ document.getElementById("quizForm").addEventListener("submit", (e) => {
     const dept = document.getElementById("dept").value;
     const phone = document.getElementById("phone").value;
 
-    // Check if the user already attempted
     if (hasAlreadyAttempted(roll)) {
         alert("You have already attempted the quiz. Thank you!");
         return;
     }
 
+    // Save user details in session storage
+    sessionStorage.setItem("userDetails", JSON.stringify({ name, roll, dept, phone }));
+    switchToQuiz(); // Move to quiz
+});
+
+// Step 2: Submit Quiz Answers
+document.getElementById("quizForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const userDetails = JSON.parse(sessionStorage.getItem("userDetails"));
     const easyAnswer = document.querySelector("input[name='easyOptions']:checked").value;
     const mediumAnswer = document.querySelector("input[name='mediumOptions']:checked").value;
     const hardAnswer = document.querySelector("input[name='hardOptions']:checked").value;
@@ -90,10 +106,7 @@ document.getElementById("quizForm").addEventListener("submit", (e) => {
         (hardAnswer === currentQuestions.hard.answer ? 1 : 0);
 
     responses.push({
-        name,
-        roll,
-        dept,
-        phone,
+        ...userDetails,
         score,
         answers: { easy: easyAnswer, medium: mediumAnswer, hard: hardAnswer }
     });
@@ -105,16 +118,4 @@ document.getElementById("quizForm").addEventListener("submit", (e) => {
         <p>Merry Christmas!</p>
         <p><a href="https://rajalakshmi.org/yrcrec/team.html">Go Back!</a></p>
     `;
-});
-
-// Check if the participant already attempted on page load
-document.getElementById("roll").addEventListener("blur", () => {
-    const roll = document.getElementById("roll").value.trim();
-    if (roll && hasAlreadyAttempted(roll)) {
-        document.querySelector(".container").innerHTML = `
-            <h1>You have already attempted the quiz!</h1>
-            <p>Thank you and Merry Christmas!</p>
-            <p><a href="https://rajalakshmi.org/yrcrec/team.html">Go Back!</a></p>
-        `;
-    }
 });

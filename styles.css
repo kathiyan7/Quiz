@@ -1,22 +1,25 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f8f9fa;
+    background: linear-gradient(to bottom right, #ff6f61, #ff9a76);
+    color: #fff;
 }
 
 .container {
-    width: 80%;
-    margin: auto;
-    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto;
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-h1 {
+h1, h2 {
     text-align: center;
-    color: #343a40;
+    color: #ff6f61;
 }
 
 form {
@@ -25,23 +28,53 @@ form {
     gap: 20px;
 }
 
-input {
-    padding: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    width: 100%;
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-button {
+label {
+    font-weight: bold;
+    color: #555;
+}
+
+input {
     padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     font-size: 16px;
 }
 
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #ff6f61;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
 button:hover {
-    background-color: #218838;
+    background-color: #ff4d4d;
+}
+
+.options label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.options input {
+    margin-right: 10px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }

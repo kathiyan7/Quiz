@@ -5,8 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="Christmas.css">
 </head>
 <body>
+    <canvas id="snowCanvas"></canvas>
+   <img src="santa_sleigh.png" alt="Santa Sleigh" class="santa">
+   <img src="christmas_tree.png" alt="Christmas Tree" class="christmas-tree">
+   <img src="christmas_bell.png" alt="Christmas Bell" class="Christmas-bell">
+   <img src="rightbottom.png" alt="Right Bottom" class="right-bottom">
+   <img src="righttop.png" alt="Right Top" class="right-top">
     <div class="container">
         <h1>Quiz Responses</h1>
         <button id="downloadExcel">Download Responses as Excel</button>
@@ -75,5 +82,6 @@
         document.getElementById("downloadExcel").addEventListener("click", downloadExcel);
         document.getElementById("clearResponses").addEventListener("click", clearAllResponses);
     </script>
+    <script src="SnowEffect.js"></script>
 </body>
 </html>

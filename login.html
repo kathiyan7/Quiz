@@ -5,8 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="Christmas.css">
 </head>
 <body>
+    <canvas id="snowCanvas"></canvas>
+   <img src="santa_sleigh.png" alt="Santa Sleigh" class="santa">
+   <img src="christmas_tree.png" alt="Christmas Tree" class="christmas-tree">
+   <img src="christmas_bell.png" alt="Christmas Bell" class="Christmas-bell">
+   <img src="rightbottom.png" alt="Right Bottom" class="right-bottom">
+   <img src="righttop.png" alt="Right Top" class="right-top">
     <div class="container">
         <h1>Admin Login</h1>
         <form id="loginForm">
@@ -21,7 +28,7 @@
     <script>
         const validCredentials = {
             username: "Kathiyan",
-            password: "EVM&WD24"
+            password: "EMH&WD24"
         };
 
         document.getElementById("loginForm").addEventListener("submit", (e) => {
@@ -37,5 +44,6 @@
             }
         });
     </script>
+    <script src="SnowEffect.js"></script>
 </body>
 </html>
