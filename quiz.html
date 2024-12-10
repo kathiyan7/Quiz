@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Christmas Quiz</h1>
+        <form id="quizForm">
+            <div id="userDetails">
+                <input type="text" id="name" placeholder="Name" required>
+                <input type="text" id="roll" placeholder="Roll Number" required>
+                <input type="text" id="dept" placeholder="Department" required>
+                <input type="tel" id="phone" placeholder="Phone Number" required>
+            </div>
+            <div id="quizQuestions">
+                <div class="question">
+                    <p id="easyQuestion"></p>
+                    <div class="options" id="easyOptions"></div>
+                </div>
+                <div class="question">
+                    <p id="mediumQuestion"></p>
+                    <div class="options" id="mediumOptions"></div>
+                </div>
+                <div class="question">
+                    <p id="hardQuestion"></p>
+                    <div class="options" id="hardOptions"></div>
+                </div>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
