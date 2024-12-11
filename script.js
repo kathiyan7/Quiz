@@ -201,15 +201,22 @@ document.getElementById("quizForm").addEventListener("submit", async(e) => {
 
    
     // Display Thank You message
-    document.querySelector(".container").innerHTML = `
-    <h1>Thank you for attempting the quiz!</h1>
-    <p>Your Score: ${score}</p>
-    <script>
+    function showThankYouMessage(score) {
+        // Update the container's content
+        document.querySelector(".container").innerHTML = `
+            <h1>Thank you for attempting the quiz!</h1>
+            <p>Your Score: ${score}</p>
+        `;
+    
+        // Trigger redirection after content update
         setTimeout(() => {
             window.location.href = "https://rajalakshmi.org/yrcrec/team.html";
         }, 3000);
-    </script>
-`;
+    }
+    
+    // Call this function when you need to display the thank-you message and redirect
+    showThankYouMessage(score);
+    
 
 });
 

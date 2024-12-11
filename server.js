@@ -60,8 +60,6 @@ app.post('/submitQuiz', async (req, res) => {
     try {
         const { userDetails, score, answers } = req.body;
 
-        console.log(userDetails);
-        console.log(score);
         // Check if the roll number already exists
         const updatedResponse = await QuizResponse.findOneAndUpdate(
             { "roll": userDetails.roll }, // Match based on roll number
