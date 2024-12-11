@@ -35,52 +35,34 @@
         </table>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script>
-        // Redirect if not logged in
-        if (!sessionStorage.getItem("isLoggedIn")) {
-            alert("You must log in to access this page.");
-            window.location.href = "login.html"; // Redirect to login page
-        }
-
-        const responses = JSON.parse(localStorage.getItem("quizResponses")) || [];
-        const tbody = document.querySelector("#responsesTable tbody");
-
-        // Populate the table with responses
-        responses.forEach((response) => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${response.name}</td>
-                <td>${response.roll}</td>
-                <td>${response.dept}</td>
-                <td>${response.phone}</td>
-                <td>${response.score}</td>
-                <td>${response.answers.easy}</td>
-                <td>${response.answers.medium}</td>
-                <td>${response.answers.hard}</td>
-            `;
-            tbody.appendChild(row);
-        });
-
-        // Function to download responses as Excel
-        function downloadExcel() {
-            const worksheet = XLSX.utils.json_to_sheet(responses);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, "Responses");
-            XLSX.writeFile(workbook, "Quiz_Responses.xlsx");
-        }
-
-        // Function to clear all responses
-        function clearAllResponses() {
-            if (confirm("Are you sure you want to clear all responses? This action cannot be undone.")) {
-                localStorage.removeItem("quizResponses");
-                alert("All responses have been cleared.");
-                location.reload(); // Refresh the page to update the table
+    <script>// Fetch quiz responses from the server
+        async function fetchResponses() {
+            try {
+                const response = await fetch('http://localhost:3000/responses');
+                const responses = await response.json();
+                const tbody = document.querySelector("#responsesTable tbody");
+        
+                responses.forEach((response) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${response.name}</td>
+                        <td>${response.roll}</td>
+                        <td>${response.dept}</td>
+                        <td>${response.phone}</td>
+                        <td>${response.score}</td>
+                        <td>${response.answers.easy}</td>
+                        <td>${response.answers.medium}</td>
+                        <td>${response.answers.hard}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (err) {
+                console.error('Error fetching responses:', err);
             }
         }
-
-        // Attach click events to buttons
-        document.getElementById("downloadExcel").addEventListener("click", downloadExcel);
-        document.getElementById("clearResponses").addEventListener("click", clearAllResponses);
+        
+        // Call the fetch function on page load
+        fetchResponses();        
     </script>
     <script src="SnowEffect.js"></script>
 </body>
