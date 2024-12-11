@@ -199,13 +199,18 @@ document.getElementById("quizForm").addEventListener("submit", async(e) => {
     // Save responses to localStorage
     localStorage.setItem("quizResponses", JSON.stringify(responses));
 
+   
     // Display Thank You message
     document.querySelector(".container").innerHTML = `
-        <h1>Thank you for attempting the quiz!</h1>
-        <p>Your Score: ${score}</p>
-       `
+    <h1>Thank you for attempting the quiz!</h1>
+    <p>Your Score: ${score}</p>
+    <script>
+        setTimeout(() => {
+            window.location.href = "https://rajalakshmi.org/yrcrec/team.html";
+        }, 3000);
+    </script>
+`;
+
 });
 
- setTimeout(()=> {
-            window.location.href="https://rajalakshmi.org/yrcrec/team.html"
-        },3000)
+ 
