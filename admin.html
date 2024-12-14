@@ -10,7 +10,6 @@
 <body>
     <canvas id="snowCanvas"></canvas>
    <img src="santa_sleigh.png" alt="Santa Sleigh" class="santa">
-   <img src="christmas_tree.png" alt="Christmas Tree" class="christmas-tree">
    <img src="christmas_bell.png" alt="Christmas Bell" class="Christmas-bell">
    <img src="rightbottom.png" alt="Right Bottom" class="right-bottom">
    <img src="righttop.png" alt="Right Top" class="right-top">
@@ -35,35 +34,68 @@
         </table>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script>// Fetch quiz responses from the server
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const currentPage = window.location.pathname.split('/').pop(); // Get the current page name
+    const isAuthenticated = sessionStorage.getItem("isAuthenticated");
+
+    // If not authenticated, redirect to login.html, but allow login.html itself
+    if (!isAuthenticated && currentPage !== "login.html") {
+        alert("You must log in to access the admin panel.");
+        window.location.href = "login.html"; // Redirect to login page
+    }
+});
+
+        // Fetch quiz responses from the server
         async function fetchResponses() {
             try {
                 const response = await fetch('http://localhost:3000/responses');
+                
+                // Check if the response is OK (status 200)
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                
                 const responses = await response.json();
                 const tbody = document.querySelector("#responsesTable tbody");
-        
-                responses.forEach((response) => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${response.name}</td>
-                        <td>${response.roll}</td>
-                        <td>${response.dept}</td>
-                        <td>${response.phone}</td>
-                        <td>${response.score}</td>
-                        <td>${response.answers.easy}</td>
-                        <td>${response.answers.medium}</td>
-                        <td>${response.answers.hard}</td>
-                    `;
-                    tbody.appendChild(row);
-                });
+                
+                // Clear the table body before adding new rows
+                tbody.innerHTML = "";
+    
+                if (responses && Array.isArray(responses)) {
+                    responses.forEach((response) => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${response.name || "N/A"}</td>
+                            <td>${response.roll || "N/A"}</td>
+                            <td>${response.dept || "N/A"}</td>
+                            <td>${response.phone || "N/A"}</td>
+                            <td>${response.score || "N/A"}</td>
+                            <td>${response.answers?.easy || "N/A"}</td>
+                            <td>${response.answers?.medium || "N/A"}</td>
+                            <td>${response.answers?.hard || "N/A"}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="8">No responses found</td></tr>`;
+                }
             } catch (err) {
                 console.error('Error fetching responses:', err);
+                alert("Failed to fetch quiz responses. Please try again.");
             }
         }
-        
+    
+        document.getElementById("downloadExcel").addEventListener("click", () => {
+        const table = document.getElementById("responsesTable");
+        const wb = XLSX.utils.table_to_book(table); // Convert the table to a workbook
+        XLSX.writeFile(wb, "QuizResponses.xlsx"); // Export the workbook as an Excel file
+        });
+
         // Call the fetch function on page load
-        fetchResponses();        
+        document.addEventListener("DOMContentLoaded", fetchResponses);
     </script>
+    
     <script src="SnowEffect.js"></script>
 </body>
 </html>

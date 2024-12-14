@@ -3,47 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>Login</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" type="text/css" href="Christmas.css">
 </head>
 <body>
-    <canvas id="snowCanvas"></canvas>
-   <img src="santa_sleigh.png" alt="Santa Sleigh" class="santa">
-   <img src="christmas_tree.png" alt="Christmas Tree" class="christmas-tree">
-   <img src="christmas_bell.png" alt="Christmas Bell" class="Christmas-bell">
-   <img src="rightbottom.png" alt="Right Bottom" class="right-bottom">
-   <img src="righttop.png" alt="Right Top" class="right-top">
-    <div class="container">
+    <div class="login-container">
         <h1>Admin Login</h1>
         <form id="loginForm">
-            <label for="username">Username:</label>
-            <input type="text" id="username" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" required>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
             <button type="submit">Login</button>
         </form>
-        <p id="error" style="color: red; display: none;">Invalid username or password!</p>
+        <p id="errorMessage" style="color: red; display: none;">Invalid credentials. Please try again.</p>
     </div>
-    <script>
-        const validCredentials = {
-            username: "Kathiyan",
-            password: "EMH&WD24"
-        };
 
-        document.getElementById("loginForm").addEventListener("submit", (e) => {
-            e.preventDefault();
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault(); // Prevent the form from submitting normally
+            
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
-            if (username === validCredentials.username && password === validCredentials.password) {
-                sessionStorage.setItem("isLoggedIn", true); // Mark the user as logged in
-                window.location.href = "admin.html"; // Redirect to admin page
-            } else {
-                document.getElementById("error").style.display = "block"; // Show error message
+            try {
+                const response = await fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                if (response.ok) {
+                    // Mark user as authenticated and redirect to the admin page
+                    sessionStorage.setItem("isAuthenticated", "true");
+                    window.location.href = "admin.html";
+                } else {
+                    // Show error message for invalid credentials
+                    const errorMessage = document.getElementById("errorMessage");
+                    errorMessage.style.display = "block";
+                }
+            } catch (error) {
+                console.error("Login failed:", error);
+                alert("Something went wrong. Please try again later.");
             }
         });
     </script>
-    <script src="SnowEffect.js"></script>
 </body>
 </html>
