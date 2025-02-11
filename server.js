@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+require('dotenv').config();
 
 // Initialize Express App
 const app = express();
@@ -15,7 +16,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname))); // Serve static files from the "public" folder
 
 // MongoDB Connection URI
-const uri = "mongodb+srv://kathiyan1472:dpPRruBV2MbxZFm9@cluster0.0dwwy.mongodb.net/quizApp?retryWrites=true&w=majority";
+// const uri = "mongodb+srv://kathiyan1472:dpPRruBV2MbxZFm9@cluster0.0dwwy.mongodb.net/quizApp?retryWrites=true&w=majority";
+const uri = process.env.URI;
 
 // Connect to MongoDB Atlas
 mongoose.connect(uri)
